@@ -8,7 +8,8 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.find_by_email("admin@rn.com").destroy
+user = User.find_by_email("admin@rn.com")
+user.destroy if user.present?
 user = Wms::User.new({"email"=>"admin@rn.com", "role"=>3, "name"=>"admin"})
 
 user.password = "password"
