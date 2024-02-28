@@ -7,3 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+Wms::User.create({"email"=>"admin@rn.com", "role"=>3, "clinic_id"=>2, "name"=>"admin"})
