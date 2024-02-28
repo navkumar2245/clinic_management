@@ -4,56 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prescription Pad</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-    }
-    .prescription-pad {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: #f5f5f5;
-    }
-    .canvas-container {
-      border: 2px solid #333;
-      max-width: 80%;
-      max-height: 80%;
-      overflow: auto;
-    }
-    canvas {
-      display: block;
-      margin: 0 auto;
-    }
-    .save-button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
 </head>
 <body>
-  <div class="prescription-pad">
-    <div class="canvas-container">
-      <canvas id="prescriptionCanvas"></canvas>
-    </div>
-    <button class="save-button" onclick="savePrescription()">Save Prescription</button>
-  </div>
+  <canvas id="prescriptionCanvas" width="800" height="600" style="border: 2px solid black;"></canvas>
+  <button onclick="clearCanvas()" style="margin: 10px;">Clear</button>
+  <button onclick="savePrescription()" style="margin: 10px;">Save Prescription</button>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
   <script>
-    var canvas = new fabric.Canvas('prescriptionCanvas');
+    const canvas = new fabric.Canvas('prescriptionCanvas');
+
+    canvas.isDrawingMode = true;
+    canvas.freeDrawingBrush.width = 2;
+    canvas.freeDrawingBrush.color = '#000'; // Black color
+
+    function clearCanvas() {
+      canvas.clear();
+    }
 
     function savePrescription() {
-      var dataUrl = canvas.toDataURL('image/png');
-
-      // Send dataUrl to server via AJAX or form submission
+      const dataUrl = canvas.toDataURL('image/png');
+      // Send dataUrl to the server to save the prescription
     }
   </script>
 </body>
