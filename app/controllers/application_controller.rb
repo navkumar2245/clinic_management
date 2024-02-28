@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
           # For simplicity, assuming all users will be redirected to the same page
         
         return clinic_appointments_path(resource.clinic)
+        else
+         return clinics_path
         end
       end
   
