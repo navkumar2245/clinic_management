@@ -1,0 +1,9 @@
+<% if appointments.any? %>
+  <ul>
+    <% appointments.each do |appointment| %>
+      <li><%= appointment.patient_name %>: <%= appointment.status %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No appointments found.</p>
+<% end %>

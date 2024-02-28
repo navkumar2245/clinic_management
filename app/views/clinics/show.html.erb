@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @clinic.name %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @clinic.location %>
+</p>
+
+<h2>Users</h2>
+<% if @clinic.users.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @clinic.users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= user.role %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No users found for this clinic.</p>
+<% end %>
+
+<br>
+
+<%= link_to 'New User', new_clinic_user_path(@clinic) %>
+<br>
+<%= link_to 'Edit', edit_clinic_path(@clinic) %> |
+<%= link_to 'Back', clinics_path %>

@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Patient Name:</strong>
+  <%= @appointment.patient_name %>
+</p>
+
+<p>
+  <strong>Appointment Time:</strong>
+  <%= @appointment.appointment_time %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @appointment.status %>
+</p>
+
+<%= link_to 'Add Prescription', add_prescription_clinic_appointment_path(@clinic, @appointment) %>
+<br>
+
+
+<%= link_to 'Mark as Doctor', mark_doctor_clinic_appointment_path(@clinic, @appointment),data: { "turbo-method": :patch }, method: :patch if @appointment.status != 'doctor' %>
+<br>
+<%= link_to 'Mark as Medicine', mark_medicine_clinic_appointment_path(@clinic, @appointment),data: { "turbo-method": :patch }, method: :patch if @appointment.status != 'medicine' %>
+<br>
+<%= link_to 'Mark as Completed', mark_completed_clinic_appointment_path(@clinic, @appointment),data: { "turbo-method": :patch }, method: :patch if @appointment.status != 'completed' %>
+<br>
+
+
+<%= link_to 'Edit', edit_clinic_appointment_path(@clinic, @appointment) %> |
+<%= link_to 'Back', clinic_appointments_path(@clinic) %>
+
