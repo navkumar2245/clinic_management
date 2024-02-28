@@ -10,7 +10,7 @@
 
 user = User.find_by_email("admin@rn.com")
 user.destroy if user.present?
-user = Wms::User.new({"email"=>"admin@rn.com", "role"=>3, "name"=>"admin"})
+user = User.new({"email"=>"admin@rn.com", "role"=>3, "name"=>"admin"})
 
 user.password = "password"
 user.password_confirmation = "password"
