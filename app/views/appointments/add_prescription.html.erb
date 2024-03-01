@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prescription Pad</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -10,14 +11,14 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
 </head>
-<body class="bg-gray-100 flex justify-center items-center h-screen">
-<div class="w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2 bg-white border border-gray-300 p-4 rounded-lg shadow-lg">
-<canvas id="prescriptionCanvas" class="border-2 border-black mb-4"></canvas>
-<div class="flex justify-center space-x-4">
-  <button onclick="clearCanvas()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Clear</button>
-  <button onclick="savePrescription()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Save Prescription</button>
-<%= link_to 'appointment', clinic_appointments_path(@clinic.id), class: "bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none" %>
-  </div>
+<body class="bg-gray-100 flex  h-screen">
+<div class="max-w-screen-lg mx-auto py-8 px-4" id="canvas-container">
+    <canvas id="prescriptionCanvas" class="border-2 border-black mb-4"></canvas>
+    <div class="flex justify-center space-x-4">
+        <button onclick="clearCanvas()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Clear</button>
+        <button onclick="savePrescription()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Save Prescription</button>
+        <%= link_to 'appointment', clinic_appointments_path(@clinic.id), class: "bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none" %>
+    </div>
 </div>
 
   <script>
@@ -29,6 +30,17 @@
 
 
     let lastTapTime = 0;
+    function clearCanvas() {
+      canvas.clear();
+    }
+    function setCanvasSize() {
+        var canvasContainer = document.getElementById('canvas-container');
+        var width = canvasContainer.clientWidth - 40;
+        var height = window.innerHeight - canvasContainer.offsetTop - 40; 
+        // var width = Math.min(window.innerWidth * 0.9, 600); // Adjust maximum width as needed
+        // var height = width * 0.75; // 4:3 aspect ratio
+        canvas.setDimensions({ width: width, height: height });
+      }
 
     canvas.on('mouse:down', function(options) {
       const currentTime = new Date().getTime();
@@ -47,9 +59,9 @@
     
 
 
-    function clearCanvas() {
-      canvas.clear();
-    }
+
+
+ 
 
     function savePrescription() {
         const dataUrl = canvas.toDataURL("image/png");
@@ -76,6 +88,9 @@
           console.error("An error occurred:", error);
         });
       }
+
+      window.addEventListener('resize', setCanvasSize);
+      setCanvasSize();
   </script>
 </body>
 </html>
