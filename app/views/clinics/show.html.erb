@@ -1,41 +1,46 @@
-<p id="notice"><%= notice %></p>
+<div class="py-6">
+  <p id="notice" class="text-green-500"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @clinic.name %>
-</p>
+  <p class="mb-4">
+    <strong class="mr-2">Name:</strong>
+    <%= @clinic.name %>
+  </p>
 
-<p>
-  <strong>Location:</strong>
-  <%= @clinic.location %>
-</p>
+  <p class="mb-4">
+    <strong class="mr-2">Location:</strong>
+    <%= @clinic.location %>
+  </p>
 
-<h2>Users</h2>
-<% if @clinic.users.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Role</th>
-      </tr>
-    </thead>
+  <h2 class="text-lg font-bold mb-4">Users</h2>
 
-    <tbody>
-      <% @clinic.users.each do |user| %>
+  <% if @clinic.users.any? %>
+    <table class="w-full mb-4">
+      <thead>
         <tr>
-          <td><%= user.email %></td>
-          <td><%= user.role %></td>
+          <th class="px-4 py-2 border">Email</th>
+          <th class="px-4 py-2 border">Role</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No users found for this clinic.</p>
-<% end %>
+      </thead>
 
-<br>
+      <tbody>
+        <% @clinic.users.each do |user| %>
+          <tr>
+            <td class="px-4 py-2 border"><%= user.email %></td>
+            <td class="px-4 py-2 border"><%= user.role %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="mb-4">No users found for this clinic.</p>
+  <% end %>
 
-<%= link_to 'New User', new_clinic_user_path(@clinic) %>
-<br>
-<%= link_to 'Edit', edit_clinic_path(@clinic) %> |
-<%= link_to 'Back', clinics_path %>
+  <div class="mb-4">
+    <%= link_to 'New User', new_clinic_user_path(@clinic), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+
+  <div class="mb-4">
+    <%= link_to 'Edit', edit_clinic_path(@clinic), class: "inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %> |
+    <%= link_to 'Back', clinics_path, class: "inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+</div>

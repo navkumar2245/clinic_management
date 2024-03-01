@@ -1,9 +1,9 @@
-<%= form_with(model: [@clinic, @appointment], local: true) do |form| %>
+<%= form_with(model: [@clinic, @appointment], local: true, class: "px-4") do |form| %>
   <% if @appointment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+    <div id="error_explanation" class="mb-4">
+      <h2 class="text-red-500"><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
 
-      <ul>
+      <ul class="list-disc ml-8">
         <% @appointment.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -11,42 +11,42 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :patient_name %>
-    <%= form.text_field :patient_name %>
+  <div class="mb-4">
+    <%= form.label :patient_name, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :patient_name, class: "form-input w-full mt-2" %>
   </div>
 
-  <div class="field">
-  <%= form.label :doctor_id %>
-  <%= form.collection_select :doctor_id, @doctors, :id, :name, prompt: true %>
- </div>
-
-  <div class="field">
-    <%= form.label :phone_number %>
-    <%= form.text_field :phone_number %>
+  <div class="mb-4">
+    <%= form.label :doctor_id, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.collection_select :doctor_id, @doctors, :id, :name, { prompt: true }, class: "form-select w-full mt-2" %>
   </div>
 
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email %>
+  <div class="mb-4">
+    <%= form.label :phone_number, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :phone_number, class: "form-input w-full mt-2" %>
   </div>
 
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_area :address %>
+  <div class="mb-4">
+    <%= form.label :email, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.email_field :email, class: "form-input w-full mt-2" %>
   </div>
 
-  <div class="field">
-    <%= form.label :appointment_time %>
-    <%= form.datetime_select :appointment_time %>
+  <div class="mb-4">
+    <%= form.label :address, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_area :address, class: "form-textarea w-full mt-2" %>
   </div>
 
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.select :status, Appointment.statuses.keys %>
+  <div class="mb-4">
+    <%= form.label :appointment_time, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.datetime_select :appointment_time, class: "form-input w-full mt-2" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="mb-4">
+    <%= form.label :status, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.select :status, Appointment.statuses.keys, {}, class: "form-select w-full mt-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
   </div>
 <% end %>

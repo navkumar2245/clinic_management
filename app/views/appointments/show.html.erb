@@ -1,45 +1,59 @@
-<p id="notice"><%= notice %></p>
+<div class="px-4">
+  <p id="notice" class="mb-4"><%= notice %></p>
 
-<p>
-  <strong>Patient Name:</strong>
-  <%= @appointment.patient_name %>
-</p>
-
-<p>
-  <strong>Appointment Time:</strong>
-  <%= @appointment.appointment_time %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @appointment.status %>
-</p>
-
-
-<% if @appointment.prescription_images.count > 0 %>
-<div class="row">
-<%  @appointment.prescription_images.each do |image| %>
-  <div class="block">
-    <%= image_tag rails_blob_path(image, only_path: true), height: '50px' , width: '30px' %>
-    <br>
-    <%= link_to image.created_at.strftime("%Y-%m-%d %H:%M:%S"), url_for(image), target: "_blank" %>
+  <div class="mb-4">
+    <p>
+      <strong class="font-bold">Patient Name:</strong>
+      <%= @appointment.patient_name %>
+    </p>
   </div>
 
-<% end %>
+  <div class="mb-4">
+    <p>
+      <strong class="font-bold">Appointment Time:</strong>
+      <%= @appointment.appointment_time %>
+    </p>
+  </div>
+
+  <div class="mb-4">
+    <p>
+      <strong class="font-bold">Status:</strong>
+      <%= @appointment.status %>
+    </p>
+  </div>
+
+  <% if @appointment.prescription_images.count > 0 %>
+    <div class="mb-4">
+      <div class="flex flex-wrap">
+        <% @appointment.prescription_images.each do |image| %>
+          <div class="mb-2 mr-2">
+            <%= image_tag rails_blob_path(image, only_path: true), class: "h-12 w-12 object-cover" %>
+            <br>
+            <%= link_to image.created_at.strftime("%Y-%m-%d %H:%M:%S"), url_for(image), target: "_blank", class: "text-blue-500 hover:underline" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= link_to 'Add Prescription', add_prescription_clinic_appointment_path(@clinic, @appointment), class: "block text-blue-500 hover:underline" %>
+  </div>
+
+  <div class="mb-4">
+  <% unless @appointment.status == 'doctor' %>
+    <%= link_to 'Mark as Doctor', mark_doctor_clinic_appointment_path(@clinic, @appointment), data: { "turbo-method": :patch }, method: :patch, class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" %>
+  <% end %>
+  <% unless @appointment.status == 'medicine' %>
+    <%= link_to 'Mark as Medicine', mark_medicine_clinic_appointment_path(@clinic, @appointment), data: { "turbo-method": :patch }, method: :patch, class: "inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2" %>
+  <% end %>
+  <% unless @appointment.status == 'completed' %>
+    <%= link_to 'Mark as Completed', mark_completed_clinic_appointment_path(@clinic, @appointment), data: { "turbo-method": :patch }, method: :patch, class: "inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2" %>
+  <% end %>
 </div>
-<% end %>
-<%= link_to 'Add Prescription', add_prescription_clinic_appointment_path(@clinic, @appointment) %>
-<br>
 
-
-<%= link_to 'Mark as Doctor', mark_doctor_clinic_appointment_path(@clinic, @appointment),data: { "turbo-method": :patch }, method: :patch if @appointment.status != 'doctor' %>
-<br>
-<%= link_to 'Mark as Medicine', mark_medicine_clinic_appointment_path(@clinic, @appointment),data: { "turbo-method": :patch }, method: :patch if @appointment.status != 'medicine' %>
-<br>
-<%= link_to 'Mark as Completed', mark_completed_clinic_appointment_path(@clinic, @appointment),data: { "turbo-method": :patch }, method: :patch if @appointment.status != 'completed' %>
-<br>
-
-
-<%= link_to 'Edit', edit_clinic_appointment_path(@clinic, @appointment) %> |
-<%= link_to 'Back', clinic_appointments_path(@clinic) %>
-
+  <div class="mb-4">
+    <%= link_to 'Edit', edit_clinic_appointment_path(@clinic, @appointment), class: "inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to 'Back', clinic_appointments_path(@clinic), class: "inline-block bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2" %>
+  </div>
+</div>

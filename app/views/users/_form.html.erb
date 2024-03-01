@@ -1,37 +1,37 @@
-<%= form_with(model: [@clinic, @user], local: true) do |form| %>
-    <% if user.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-  
-        <ul>
+<%= form_with(model: [@clinic, @user], local: true, class: "py-6") do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation" class="mb-4">
+      <h2 class="text-red-500"><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul class="list-disc ml-8">
         <% user.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-  
-    <div class="field">
-      <%= form.label :email %>
-      <%= form.text_field :email %>
-    </div>
-  
-    <div class="field">
-      <%= form.label :password %>
-      <%= form.password_field :password %>
-    </div>
-  
-    <div class="field">
-      <%= form.label :role %>
-      <%= form.select :role, User.roles.keys %>
-    </div>
-  
-    <div class="actions">
-      <%= form.submit %>
+      </ul>
     </div>
   <% end %>
-  
+
+  <div class="mb-4">
+    <%= form.label :name, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :name, class: "form-input w-full mt-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :email, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.text_field :email, class: "form-input w-full mt-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :password, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.password_field :password, class: "form-input w-full mt-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :role, class: "block text-gray-700 font-bold mb-2" %>
+    <%= form.select :role, User.roles.keys, {}, class: "form-select w-full mt-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+<% end %>
