@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Prescription Pad</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
 </head>
 <body>
@@ -23,9 +25,30 @@
     }
 
     function savePrescription() {
-      const dataUrl = canvas.toDataURL('image/png');
-      // Send dataUrl to the server to save the prescription
-    }
+        const dataUrl = canvas.toDataURL("image/png");
+      
+        fetch("/clinics/<%= @clinic.id%>/appointments/<%= @appointment.id%>/save_prescription", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            "X-CSRF-Token": document.querySelector("meta[name='csrf-token']").content
+          },
+          body: JSON.stringify({ prescription_data: dataUrl })
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log("Prescription saved successfully");
+            window.location.href = "/clinics/<%= @clinic.id%>/appointments"
+            // Optionally, handle success response
+          } else {
+            console.error("Failed to save prescription");
+            // Optionally, handle error response
+          }
+        })
+        .catch(error => {
+          console.error("An error occurred:", error);
+        });
+      }
   </script>
 </body>
 </html>

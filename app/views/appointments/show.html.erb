@@ -15,6 +15,8 @@
   <%= @appointment.status %>
 </p>
 
+<%= image_tag rails_blob_path(@appointment.prescription_images.last, only_path: true) %>
+
 <%= link_to 'Add Prescription', add_prescription_clinic_appointment_path(@clinic, @appointment) %>
 <br>
 

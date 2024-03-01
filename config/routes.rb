@@ -10,7 +10,7 @@ Rails.application.routes.draw do
         patch 'mark_medicine', on: :member
         patch 'mark_completed', on: :member
         get 'add_prescription', on: :member
-        patch 'save_prescription', on: :member
+        post 'save_prescription', on: :member
 
       end
     end

@@ -36,12 +36,6 @@ class AppointmentsController < ApplicationController
       end
     end
   
-    def save_prescription
-      @appointment.update(prescription: params[:prescription])
-  
-      redirect_to clinic_appointment_path(@clinic, @appointment), notice: 'Prescription was successfully added.'
-    end
-  
     def update
       if @appointment.update(appointment_params)
         redirect_to clinic_appointments_path(@clinic), notice: 'Appointment was successfully updated.'
@@ -80,6 +74,13 @@ class AppointmentsController < ApplicationController
     else
       render :show
     end
+  end
+
+  def save_prescription
+    appointment = Appointment.find(params[:id])
+    appointment.prescription_images.attach(io: StringIO.new(Base64.decode64(params[:prescription_data].split(',')[1])),filename: 'prescription_image.png')
+    appointment.save
+    render json: { success: true }
   end
 
     private
