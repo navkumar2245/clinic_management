@@ -15,8 +15,18 @@
   <%= @appointment.status %>
 </p>
 
+
 <% if @appointment.prescription_images.count > 0 %>
-<%= image_tag rails_blob_path(@appointment.prescription_images.last, only_path: true) %>
+<div class="row">
+<%  @appointment.prescription_images.each do |image| %>
+  <div class="block">
+    <%= image_tag rails_blob_path(image, only_path: true), height: '50px' , width: '30px' %>
+    <br>
+    <%= link_to image.created_at.strftime("%Y-%m-%d %H:%M:%S"), url_for(image), target: "_blank" %>
+  </div>
+
+<% end %>
+</div>
 <% end %>
 <%= link_to 'Add Prescription', add_prescription_clinic_appointment_path(@clinic, @appointment) %>
 <br>
