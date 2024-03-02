@@ -1,0 +1,5 @@
+<% @medicines.each do |medicine| %>
+    <p><%= medicine.name %> - <%= medicine.quantity %></p>
+    <%= link_to 'Edit', edit_clinic_medicine_path(@clinic, medicine) %>
+    <%= link_to 'Delete', clinic_medicine_path(@clinic, medicine), method: :delete, data: { confirm: 'Are you sure?' } %>
+  <% end %>

@@ -11,8 +11,9 @@ Rails.application.routes.draw do
         patch 'mark_completed', on: :member
         get 'add_prescription', on: :member
         post 'save_prescription', on: :member
-
       end
+      resources :medicines
+
     end
   
     root 'appointments#index'
