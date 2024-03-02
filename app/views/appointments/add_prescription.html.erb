@@ -42,26 +42,21 @@
         canvas.setDimensions({ width: width, height: height });
       }
 
-    canvas.on('mouse:down', function(options) {
-      const currentTime = new Date().getTime();
-      const timeDiff = currentTime - lastTapTime;
-      if (timeDiff < 300) {
-        // Double tap detected
-        clearCanvas();
-      }
-      lastTapTime = currentTime;
-    });
+//    canvas.on('mouse:down', function(options) {
+//      const currentTime = new Date().getTime();
+//      const timeDiff = currentTime - lastTapTime;
+//      if (timeDiff < 300) {
+//       Double tap detected
+//        clearCanvas();
+//      }
+//      lastTapTime = currentTime;
+//    });
 
-    //canvas.on('touch:longpress', function(options) {
+    canvas.on('touch:longpress', function(options) {
         // Long press detected
-    //    clearCanvas();
-    //  });
-    
-
-
-
-
- 
+        clearCanvas();
+     });
+     
 
     function savePrescription() {
         const dataUrl = canvas.toDataURL("image/png");
