@@ -8,13 +8,15 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "fabric.min"%>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/4.5.0/fabric.min.js"></script>
+
 </head>
 <body class="bg-gray-100 flex  h-screen">
 <div class="max-w-screen-lg mx-auto py-8 px-4" id="canvas-container">
     <canvas id="prescriptionCanvas" class="border-2 border-black mb-4"></canvas>
     <div class="flex justify-center space-x-4">
+    <button id="eraserButton" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Eraser</button>
         <button onclick="clearCanvas()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Clear</button>
         <button onclick="savePrescription()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none">Save Prescription</button>
         <%= link_to 'appointment', clinic_appointments_path(@clinic.id), class: "bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none" %>
@@ -22,7 +24,10 @@
 </div>
 
   <script>
-    const canvas = new fabric.Canvas('prescriptionCanvas');
+    const canvas = new fabric.Canvas('prescriptionCanvas',{
+      selection: false
+    });
+    let isEraserMode = false; // Flag to track eraser mode
 
     canvas.isDrawingMode = true;
     canvas.freeDrawingBrush.width = 2;
@@ -42,21 +47,26 @@
         canvas.setDimensions({ width: width, height: height });
       }
 
-//    canvas.on('mouse:down', function(options) {
-//      const currentTime = new Date().getTime();
-//      const timeDiff = currentTime - lastTapTime;
-//      if (timeDiff < 300) {
-//       Double tap detected
-//        clearCanvas();
-//      }
-//      lastTapTime = currentTime;
-//    });
+      // Handle eraser button click
+      const eraserButton = document.getElementById('eraserButton');
+      eraserButton.addEventListener('click', () => {
+        isEraserMode = !isEraserMode; // Toggle eraser mode on/off
+        canvas.isDrawingMode = isEraserMode; // Set drawing mode based on eraser mode
+        if (isEraserMode) {
+          const eraserBrush = new fabric.EraserBrush(canvas); // Create an eraser brush instance (optional)
+          canvas.freeDrawingBrush = eraserBrush; // Set eraser brush for erasing
+          canvas.freeDrawingBrush.width = 25;
+          // Change eraser button color (optional)
+          eraserButton.classList.add('bg-red-700'); // Add a darker red class for eraser mode
+        } else {
+          canvas.isDrawingMode = true;
+    canvas.freeDrawingBrush = new fabric.PencilBrush(canvas); // Set pencil brush for drawing
+    canvas.freeDrawingBrush.width = 2;
+    canvas.freeDrawingBrush.color = '#000'; // Black color
+    eraserButton.classList.remove('bg-red-700');
+        }
+      });
 
-    canvas.on('touch:longpress', function(options) {
-        // Long press detected
-        clearCanvas();
-     });
-     
 
     function savePrescription() {
         const dataUrl = canvas.toDataURL("image/png");
